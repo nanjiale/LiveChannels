@@ -4,3 +4,8 @@
 目前只添加了几个源 后期会加上其他  未完待续
 
 提示:由于是直播  所以无法拖动  快进
+
+#效果展示
+![主界面截图](https://github.com/nanjiale/LiveChannels/blob/master/screen/cs.png)
+![播放界面截图1](https://github.com/nanjiale/LiveChannels/blob/master/screen/cs1.png)
+![播放界面截图2](https://github.com/nanjiale/LiveChannels/blob/master/screen/cs2.png)
