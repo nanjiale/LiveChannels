@@ -1,17 +1,20 @@
 package com.lele.activity
 
+import android.content.IntentFilter
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
+import com.lele.brodcastreceiver.NetWorkReceiver
 import io.vov.vitamio.MediaPlayer
 import io.vov.vitamio.Vitamio
 import kotlinx.android.synthetic.main.activity_play_view.*
 import java.util.*
 
 class PlayView : AppCompatActivity(), OnClickListener{
-
+    private var receiver:NetWorkReceiver?=null //定义网络改变广播接收者
+    private var filter:IntentFilter?=null //给广播接收者添加事件
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_view)
@@ -24,6 +27,10 @@ class PlayView : AppCompatActivity(), OnClickListener{
         back.setOnClickListener(this)
     palyname.setOnClickListener(this)
     is_play.setOnClickListener(this)
+     receiver= NetWorkReceiver()
+    filter = IntentFilter()
+    filter!!.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+    registerReceiver(receiver!!,filter)
     }
 
     private fun setData() {
@@ -57,7 +64,7 @@ class PlayView : AppCompatActivity(), OnClickListener{
                             playdock.visibility=View.GONE}
                     }
                 }
-                timer.schedule(timerTask,3000) //如果显示了  3秒没操作  就将其隐藏
+                timer.schedule(timerTask,5000) //如果显示了  3秒没操作  就将其隐藏
             }else{
                 toolsbar.visibility= View.GONE
                 playdock.visibility=View.GONE
@@ -85,4 +92,9 @@ class PlayView : AppCompatActivity(), OnClickListener{
         }
     }
 
+    override fun onDestroy() {
+        unregisterReceiver(receiver) //在activity摧毁时解除广播接收者的注册
+        super.onDestroy()
+
+    }
 }
